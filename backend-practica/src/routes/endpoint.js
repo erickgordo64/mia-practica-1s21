@@ -79,15 +79,9 @@ router.post('/addArchivo', multiPartMiddleware, async(req, res) => {
             if (err) throw err;
             //console.log("Number of records inserted: " + result.affectedRows);
           });
-
         //dato.push(values);
-      
-
     }
-
     //console.log(dato);
-
-   
     res.status(200).json({
         dato
     })
