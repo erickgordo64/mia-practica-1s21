@@ -215,10 +215,9 @@ router.get('/Consulta8', async (req, res) => {
 
 router.get('/Consulta9', async (req, res) => {
 
-    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
-    +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
-    +' inner join tratamiento on tratamiento.idtratamiento=detalle_tratamiento.tratamiento_idtratamiento'
-    +' where ESTADO_VICTIMA=\'En Cuarentena\' and EFECTIVIDAD_EN_VICTIMA>5 and TRATAMIENTO=\'Transfusiones de sangre\' GROUP BY idvictima'
+    var sql='select count(hospital_idhospital) as pacientes_hospital, ((count(hospital_idhospital)/(select count(idregistro_paciente) from registro_paciente))*100) as porcentaje, hospital_idhospital, hospital.NOMBRE_HOSPITAL from registro_paciente'
+    +' inner join hospital on hospital.idhospital=registro_paciente.hospital_idhospital'
+    +' group by hospital_idhospital'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
@@ -229,10 +228,14 @@ router.get('/Consulta9', async (req, res) => {
 
 router.get('/Consulta10', async (req, res) => {
 
-    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
-    +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
-    +' inner join tratamiento on tratamiento.idtratamiento=detalle_tratamiento.tratamiento_idtratamiento'
-    +' where ESTADO_VICTIMA=\'En Cuarentena\' and EFECTIVIDAD_EN_VICTIMA>5 and TRATAMIENTO=\'Transfusiones de sangre\' GROUP BY idvictima'
+    var sql='select count(tipo_contacto_idtipo_contacto) as contacto_repetido, hospital.idhospital, tipo_contacto.CONTACTO_FISICO, hospital.NOMBRE_HOSPITAL,'
+    +' ((count(tipo_contacto_idtipo_contacto)/(select count(tipo_contacto_idtipo_contacto) from detalle_persona_asociada))*100) as porcentaje'
+    +' from detalle_persona_asociada '
+    +' inner join tipo_contacto on tipo_contacto.idtipo_contacto=detalle_persona_asociada.tipo_contacto_idtipo_contacto'
+    +' inner join victima on victima.idvictima=detalle_persona_asociada.victima_idvictima'
+    +' inner join registro_paciente on registro_paciente.victima_idvictima=victima.idvictima'
+    +' inner join hospital on hospital.idhospital=registro_paciente.hospital_idhospital'
+    +' group by idhospital, idtipo_contacto order by idhospital'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
