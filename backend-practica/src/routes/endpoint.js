@@ -113,7 +113,22 @@ router.get('/Consulta2', async (req, res) => {
     });
 });
 
-router.get('/Consulta2', async (req, res) => {
+router.get('/Consulta3', async (req, res) => {
+
+    var sql='select count(victima_idvictima) as dato, victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA, victima.FECHA_MUERTE from detalle_persona_asociada'
+    +' inner join victima on victima.idvictima=detalle_persona_asociada.victima_idvictima'
+    +' where  victima.FECHA_MUERTE!=\'0000-00-00 00:00:00\''
+    +' group by victima.idvictima'
+    +' having dato>3'
+
+    pool.query(sql, (error, result) => {
+        if (error) throw error;
+ 
+        res.send(result);
+    });
+});
+
+router.get('/Consulta4', async (req, res) => {
 
     var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
@@ -127,7 +142,7 @@ router.get('/Consulta2', async (req, res) => {
     });
 });
 
-router.get('/Consulta2', async (req, res) => {
+router.get('/Consulta5', async (req, res) => {
 
     var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
@@ -141,7 +156,7 @@ router.get('/Consulta2', async (req, res) => {
     });
 });
 
-router.get('/Consulta2', async (req, res) => {
+router.get('/Consulta6', async (req, res) => {
 
     var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
@@ -155,7 +170,7 @@ router.get('/Consulta2', async (req, res) => {
     });
 });
 
-router.get('/Consulta2', async (req, res) => {
+router.get('/Consulta7', async (req, res) => {
 
     var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
@@ -169,7 +184,7 @@ router.get('/Consulta2', async (req, res) => {
     });
 });
 
-router.get('/Consulta2', async (req, res) => {
+router.get('/Consulta8', async (req, res) => {
 
     var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
@@ -183,7 +198,7 @@ router.get('/Consulta2', async (req, res) => {
     });
 });
 
-router.get('/Consulta2', async (req, res) => {
+router.get('/Consulta9', async (req, res) => {
 
     var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
@@ -197,21 +212,7 @@ router.get('/Consulta2', async (req, res) => {
     });
 });
 
-router.get('/Consulta2', async (req, res) => {
-
-    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
-    +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
-    +' inner join tratamiento on tratamiento.idtratamiento=detalle_tratamiento.tratamiento_idtratamiento'
-    +' where ESTADO_VICTIMA=\'En Cuarentena\' and EFECTIVIDAD_EN_VICTIMA>5 and TRATAMIENTO=\'Transfusiones de sangre\' GROUP BY idvictima'
-
-    pool.query(sql, (error, result) => {
-        if (error) throw error;
- 
-        res.send(result);
-    });
-});
-
-router.get('/Consulta2', async (req, res) => {
+router.get('/Consulta10', async (req, res) => {
 
     var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
