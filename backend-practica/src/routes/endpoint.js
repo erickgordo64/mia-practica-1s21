@@ -90,7 +90,11 @@ router.post('/addArchivo', multiPartMiddleware, async(req, res) => {
 
 router.get('/Consulta1', async (req, res) => {
 
-    var sql='select hospital.NOMBRE_HOSPITAL, hospital.DIRECCION_HOSPITAL, count(victima.FECHA_MUERTE) as muertos from registro_paciente inner join hospital on registro_paciente.hospital_idhospital=hospital.idhospital inner join victima on registro_paciente.victima_idvictima=victima.idvictima where FECHA_MUERTE!=\'0000-00-00 00:00:00\' group by NOMBRE_HOSPITAL ORDER BY NOMBRE_HOSPITAL ASC'
+    var sql='select hospital.NOMBRE_HOSPITAL, hospital.DIRECCION_HOSPITAL, count(victima.FECHA_MUERTE) as MUERTOS' 
+    +' from registro_paciente inner join hospital on registro_paciente.hospital_idhospital=hospital.idhospital' 
+    +' inner join victima on registro_paciente.victima_idvictima=victima.idvictima'
+    +' where FECHA_MUERTE!=\'0000-00-00 00:00:00\''
+    +' group by hospital_idhospital ORDER BY hospital_idhospital'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
