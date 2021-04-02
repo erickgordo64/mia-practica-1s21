@@ -146,10 +146,11 @@ router.get('/Consulta4', async (req, res) => {
 
 router.get('/Consulta5', async (req, res) => {
 
-    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
+    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, count(victima_idvictima) as dato from detalle_tratamiento'
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
     +' inner join tratamiento on tratamiento.idtratamiento=detalle_tratamiento.tratamiento_idtratamiento'
-    +' where ESTADO_VICTIMA=\'En Cuarentena\' and EFECTIVIDAD_EN_VICTIMA>5 and TRATAMIENTO=\'Transfusiones de sangre\' GROUP BY idvictima'
+    +' where TRATAMIENTO=\'Oxigeno\''
+    +' group by idvictima order by dato  desc limit 5'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
