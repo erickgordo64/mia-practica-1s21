@@ -165,10 +165,12 @@ router.get('/Consulta5', async (req, res) => {
 
 router.get('/Consulta6', async (req, res) => {
 
-    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
+    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.FECHA_MUERTE, ubicacion_victima.UBICACION_VCTIMA, tratamiento.TRATAMIENTO FROM detalle_tratamiento' 
     +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
     +' inner join tratamiento on tratamiento.idtratamiento=detalle_tratamiento.tratamiento_idtratamiento'
-    +' where ESTADO_VICTIMA=\'En Cuarentena\' and EFECTIVIDAD_EN_VICTIMA>5 and TRATAMIENTO=\'Transfusiones de sangre\' GROUP BY idvictima'
+    +' inner join ubicacion_victima on victima.idvictima=ubicacion_victima.victima_idvictima'
+    +' where UBICACION_VCTIMA=\'1987 Delphine Well\' and TRATAMIENTO=\'Manejo de la presión arterial\' AND FECHA_MUERTE!=\'0000-00-00 00:00:00\''
+    +' group by idvictima;'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
