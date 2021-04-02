@@ -181,10 +181,13 @@ router.get('/Consulta6', async (req, res) => {
 
 router.get('/Consulta7', async (req, res) => {
 
-    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA from detalle_tratamiento'
-    +' inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima'
-    +' inner join tratamiento on tratamiento.idtratamiento=detalle_tratamiento.tratamiento_idtratamiento'
-    +' where ESTADO_VICTIMA=\'En Cuarentena\' and EFECTIVIDAD_EN_VICTIMA>5 and TRATAMIENTO=\'Transfusiones de sangre\' GROUP BY idvictima'
+    var sql='select count(idvictima) as dato, victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA, count(detalle_tratamiento.tratamiento_idtratamiento) as trata, registro_paciente.FECHA_LLEGADA from victima'
+    +' inner join registro_paciente on registro_paciente.victima_idvictima=victima.idvictima'
+    +' inner join detalle_tratamiento on detalle_tratamiento.victima_idvictima=victima.idvictima'
+    +' inner join detalle_persona_asociada on detalle_persona_asociada.victima_idvictima=victima.idvictima'
+    +' where  victima.FECHA_MUERTE!=\'0000-00-00 00:00:00\' and registro_paciente.FECHA_LLEGADA!=\'0000-00-00 00:00:00\''
+    +' group by victima.idvictima'
+    +' having dato<2 and trata=2'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
