@@ -93,7 +93,7 @@ router.get('/Consulta1', async (req, res) => {
     var sql='select hospital.NOMBRE_HOSPITAL, hospital.DIRECCION_HOSPITAL, count(victima.FECHA_MUERTE) as MUERTOS' 
     +' from registro_paciente inner join hospital on registro_paciente.hospital_idhospital=hospital.idhospital' 
     +' inner join victima on registro_paciente.victima_idvictima=victima.idvictima'
-    +' group by hospital_idhospital ORDER BY hospital_idhospital'
+    +' group by hospital_idhospital ORDER BY NOMBRE_HOSPITAL ASC'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
@@ -235,6 +235,17 @@ router.get('/Consulta10', async (req, res) => {
     +' inner join registro_paciente on registro_paciente.victima_idvictima=victima.idvictima'
     +' inner join hospital on hospital.idhospital=registro_paciente.hospital_idhospital'
     +' group by idhospital, idtipo_contacto order by idhospital'
+
+    pool.query(sql, (error, result) => {
+        if (error) throw error;
+ 
+        res.send(result);
+    });
+});
+
+
+router.get('/prueba', async(req, res)=> {
+    var sql='call prueba'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
