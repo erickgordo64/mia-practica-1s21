@@ -26,7 +26,7 @@ router.get('/getUsuarios', async (req, res) => {
     });
 });
 
-router.post('/addArchivo', multiPartMiddleware, async(req, res) => {
+router.post('/cargaTemporal', multiPartMiddleware, async(req, res) => {
 
     console.log("body ", req.body, "file ", req.files);
     
@@ -180,13 +180,13 @@ router.get('/Consulta6', async (req, res) => {
 
 router.get('/Consulta7', async (req, res) => {
 
-    var sql='select count(idvictima) as dato, victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA, count(detalle_tratamiento.tratamiento_idtratamiento) as trata, registro_paciente.FECHA_LLEGADA from victima'
+    var sql='select count(idvictima) as dato, victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA, count(detalle_tratamiento.tratamiento_idtratamiento) as trata from victima'
     +' inner join registro_paciente on registro_paciente.victima_idvictima=victima.idvictima'
     +' inner join detalle_tratamiento on detalle_tratamiento.victima_idvictima=victima.idvictima'
     +' inner join detalle_persona_asociada on detalle_persona_asociada.victima_idvictima=victima.idvictima'
-    +' where  victima.FECHA_MUERTE!=\'0000-00-00 00:00:00\' and registro_paciente.FECHA_LLEGADA!=\'0000-00-00 00:00:00\''
+    +' where  victima.FECHA_MUERTE!=\'0000-00-00 00:00:00\''
     +' group by victima.idvictima'
-    +' having dato<2 and trata=2'
+    +' having dato<2 and trata=2;'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
@@ -246,6 +246,36 @@ router.get('/Consulta10', async (req, res) => {
 
 router.get('/prueba', async(req, res)=> {
     var sql='call prueba'
+
+    pool.query(sql, (error, result) => {
+        if (error) throw error;
+ 
+        res.send(result);
+    });
+});
+
+router.get('/cargarModelo', async(req, res)=> {
+    var sql='call crearbd'
+
+    var consul1=pool.query(sql, (error, result) => {
+        if (error) throw error;
+        res.send("filas afectadas "+result.affectedRows);
+    });
+
+});
+
+router.get('/eliminarModelo', async(req, res)=> {
+    var sql='call borrar_tablasbd'
+
+    pool.query(sql, (error, result) => {
+        if (error) throw error;
+ 
+        res.send(result);
+    });
+});
+
+router.get('/eliminarTemporal', async(req, res)=> {
+    var sql='truncate table temporal'
 
     pool.query(sql, (error, result) => {
         if (error) throw error;
