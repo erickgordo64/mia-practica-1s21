@@ -255,11 +255,21 @@ router.get('/prueba', async(req, res)=> {
 });
 
 router.post('/cargarModelo', async(req, res)=> {
-    var sql='call crearbd'
+    var sql='call crearbd()'
 
-    var consul1=pool.query(sql, (error, result) => {
+    pool.query(sql, (error, result) => {
         if (error) throw error;
-        res.send("filas afectadas "+result.affectedRows);
+        res.send(result);
+    });
+
+});
+
+router.post('/cargarModelo2', async(req, res)=> {
+    var sql1='call cargar_datosbd()'
+
+    pool.query(sql1, (error, result) => {
+        if (error) throw error;
+        res.send(result);
     });
 
 });
