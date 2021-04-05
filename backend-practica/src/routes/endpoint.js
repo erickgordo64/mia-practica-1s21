@@ -254,7 +254,7 @@ router.get('/prueba', async(req, res)=> {
     });
 });
 
-router.get('/cargarModelo', async(req, res)=> {
+router.post('/cargarModelo', async(req, res)=> {
     var sql='call crearbd'
 
     var consul1=pool.query(sql, (error, result) => {
@@ -264,7 +264,7 @@ router.get('/cargarModelo', async(req, res)=> {
 
 });
 
-router.get('/eliminarModelo', async(req, res)=> {
+router.post('/eliminarModelo', async(req, res)=> {
     var sql='call borrar_tablasbd'
 
     pool.query(sql, (error, result) => {
@@ -274,7 +274,7 @@ router.get('/eliminarModelo', async(req, res)=> {
     });
 });
 
-router.get('/eliminarTemporal', async(req, res)=> {
+router.post('/eliminarTemporal', async(req, res)=> {
     var sql='truncate table temporal'
 
     pool.query(sql, (error, result) => {
