@@ -284,4 +284,18 @@ router.post('/eliminarTemporal', async(req, res)=> {
     });
 });
 
+router.post('/carga', async(req, res)=> {
+    var sql='LOAD DATA INFILE \'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/GRAND_VIRUS_EPICENTER.csv\''
+    +' INTO TABLE temporal'
+    +' fields terminated by \';\''
+    +' lines terminated by \'\n\''
+    +' ignore 1 lines'
+
+    pool.query(sql, (error, result) => {
+        if (error) throw error;
+ 
+        res.send(result);
+    });
+});
+
 module.exports=router;
