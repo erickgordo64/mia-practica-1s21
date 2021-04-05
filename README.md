@@ -2,7 +2,7 @@
 
 instalar las siguientes dependencias
 
-npm install nodemon
+npm install nodemon -D
 npm install express
 npm install body-parser
 npm install cors
