@@ -18,11 +18,6 @@ FECHA_CONFIRMACION,
 str_to_date(FECHA_MUERTE, '%Y-%m-%d %H:%i:%s') as fecha_muerte,
 ESTADO_VICTIMA from temporal where NOMBRE_VICTIMA!=''
 group by NOMBRE_VICTIMA, APELLIDO_VICTIMA, DIRECCION_VICTIMA, FECHA_PRIMERA_SOSPECHA, FECHA_CONFIRMACION, FECHA_MUERTE, ESTADO_VICTIMA;
-
--- prueba del insert
-insert into victima(NOMBRE_VICTIMA, APELLIDO_VICTIMA, DIRECCION_VICTIMA, FECHA_PRIMERA_SOSPECHA, FECHA_CONFIRMACION, FECHA_MUERTE, ESTADO_VICTIMA)  
-values('erick','valenzuela','preuba1','2020-06-12 00:00:00','2020-06-12 00:00:00','2020-06-12 00:00:00','muerta');
-delete from victima where idvictima=5;
 -- ------ insert------------
 insert into victima(NOMBRE_VICTIMA, APELLIDO_VICTIMA, DIRECCION_VICTIMA, FECHA_PRIMERA_SOSPECHA, FECHA_CONFIRMACION, FECHA_MUERTE, ESTADO_VICTIMA) 
 select NOMBRE_VICTIMA, APELLIDO_VICTIMA, DIRECCION_VICTIMA, 
@@ -148,3 +143,4 @@ drop table tipo_contacto;
 
 -- borrar datos de la temporal
 truncate table temporal;
+drop table temporal;
