@@ -195,6 +195,22 @@ router.get('/Consulta7', async (req, res) => {
     });
 });
 
+router.get('/Consulta7A', async (req, res) => {
+
+    var sql='select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA FROM registro_paciente'
+    +' inner join victima on victima.idvictima=registro_paciente.victima_idvictima'
+    +' where (select count(*) from detalle_persona_asociada as DPA where DPA.victima_idvictima=victima.idvictima) <2'
+    +' and (select count(*) from detalle_tratamiento as DPT where DPT.victima_idvictima=victima.idvictima) =2'
+    +' and victima.FECHA_MUERTE!=\'0000-00-00 00:00:00\''
+    +' group by victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA;'
+
+    pool.query(sql, (error, result) => {
+        if (error) throw error;
+ 
+        res.send(result);
+    });
+});
+
 router.get('/Consulta8', async (req, res) => {
 
     var sql='(select month(victima.FECHA_PRIMERA_SOSPECHA) AS MES, victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, count(tratamiento_idtratamiento) as cantidad_tratamiento FROM detalle_tratamiento'
