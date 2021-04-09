@@ -308,4 +308,19 @@ router.post('/carga', async(req, res)=> {
     });
 });
 
+router.post('/cargalinux', async(req, res)=> {
+    var sql='LOAD DATA INFILE \'/var/lib/mysql-files/GRAND_VIRUS_EPICENTER.csv\''
+    +' INTO TABLE temporal'
+    +' fields terminated by \';\''
+    +' lines terminated by \'\n\''
+    +' ignore 1 lines'
+
+    pool.query(sql, (error, result) => {
+        if (error) throw error;
+ 
+        res.send(result);
+    });
+});
+
+
 module.exports=router;
