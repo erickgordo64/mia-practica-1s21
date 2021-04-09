@@ -2,7 +2,7 @@ use practica1s2021;
 -- ---------------------------------------------------------
 -- carga masiva
 -- -------------------------------------------------------
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/GRAND_VIRUS_EPICENTER.csv'
+LOAD DATA INFILE '/var/lib/mysql-files/GRAND_VIRUS_EPICENTER.csv'
 INTO TABLE temporal
 fields terminated by ';'
 lines terminated by '\n'
@@ -148,3 +148,4 @@ drop table tipo_contacto;
 
 -- borrar datos de la temporal
 truncate table temporal;
+drop table temporal;
