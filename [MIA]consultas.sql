@@ -41,8 +41,15 @@ inner join registro_paciente on registro_paciente.victima_idvictima=victima.idvi
 inner join detalle_tratamiento on detalle_tratamiento.victima_idvictima=victima.idvictima
 inner join detalle_persona_asociada on detalle_persona_asociada.victima_idvictima=victima.idvictima
 where  victima.FECHA_MUERTE!='0000-00-00 00:00:00'
-group by victima.idvictima
+group by victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA
 having dato<2 and trata=2;
+-- alternativa consulta 7
+select victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA FROM registro_paciente
+inner join victima on victima.idvictima=registro_paciente.victima_idvictima
+where (select count(*) from detalle_persona_asociada as DPA where DPA.victima_idvictima=victima.idvictima) <2
+and (select count(*) from detalle_tratamiento as DPT where DPT.victima_idvictima=victima.idvictima) =2
+and victima.FECHA_MUERTE!='0000-00-00 00:00:00'
+group by victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA;
 -- consulta 8
 (select month(victima.FECHA_PRIMERA_SOSPECHA) AS MES, victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, count(tratamiento_idtratamiento) as cantidad_tratamiento FROM detalle_tratamiento
 inner join victima on victima.idvictima=detalle_tratamiento.victima_idvictima
