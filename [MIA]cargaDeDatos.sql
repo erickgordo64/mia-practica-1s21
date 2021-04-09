@@ -7,6 +7,12 @@ INTO TABLE temporal
 fields terminated by ';'
 lines terminated by '\n'
 ignore 1 lines; 
+-- carga masiva linux
+LOAD DATA INFILE '/var/lib/mysql-files/GRAND_VIRUS_EPICENTER.csv'
+INTO TABLE temporal
+fields terminated by ';'
+lines terminated by '\n'
+ignore 1 lines; 
 -- -------------------------------------------------------
 -- INSERTAR EN VICTIMA %Y-%m-%d %H:%i:%s
 --- -------------------------------------------------------
