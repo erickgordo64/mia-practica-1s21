@@ -12,7 +12,7 @@ where ESTADO_VICTIMA='En Cuarentena' and EFECTIVIDAD_EN_VICTIMA>5 and TRATAMIENT
 select count(victima_idvictima) as dato, victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.DIRECCION_VICTIMA, victima.FECHA_MUERTE from detalle_persona_asociada
 inner join victima on victima.idvictima=detalle_persona_asociada.victima_idvictima
 where  victima.FECHA_MUERTE!='0000-00-00 00:00:00'
-group by victima.idvictima
+group by victima.idvictima, victima.FECHA_MUERTE
 having dato>3;
 -- CONSULTA 4
 select count(victima_idvictima) as dato, victima.NOMBRE_VICTIMA, victima.APELLIDO_VICTIMA, victima.ESTADO_VICTIMA, tipo_contacto.CONTACTO_FISICO FROM detalle_persona_asociada
