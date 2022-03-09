@@ -11,8 +11,8 @@ const multiPartMiddleware = multipart();
 let json=null
 const Json=null;
 
-router.get('/', async (req, res) => {
-    res.status(200);
+router.get('/semi1-8', async (req, res) => {
+    res.status(200).json("error")
 })
 
 router.get('/getUsuarios', async (req, res) => {
